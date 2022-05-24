@@ -1,0 +1,9 @@
+{
+    "types":[
+        {"id":"1","type_name":"average"},
+        {"id":"2","type_name":"reserved"},
+        {"id":"3","type_name":"role-model"},
+        {"id":"4","type_name":"self-centered"}
+
+    ]
+}

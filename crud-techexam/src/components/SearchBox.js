@@ -2,13 +2,11 @@ import React from 'react';
 
 const SearchBox = ({ searchfield, searchChange }) => {
   return (
-    <div>
       <input
         className='form-control
-        block
         w-full
-        px-3
-        py-1.5
+        block
+        p-3
         text-base
         font-normal
         text-gray-700
@@ -17,13 +15,11 @@ const SearchBox = ({ searchfield, searchChange }) => {
         rounded
         transition
         ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+        focus:text-gray-700 focus:bg-white focus:border-indigo-600 focus:outline-none'
         type='search'
         placeholder='Search here'
         onChange={searchChange}
       />
-    </div>
   );
 }
 

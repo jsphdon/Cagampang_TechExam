@@ -1,5 +1,7 @@
 import '../index.css';
 import React, {useState} from 'react';
+import AsyncSelect from 'react-select/async';
+import mockapi from '../mockapi';
 import { Switch } from 'antd';
 
 const AddRecord = () => {
@@ -9,14 +11,32 @@ const AddRecord = () => {
     toggle ? setToggle(0): setToggle(1);
   }
 
-  
+  // const [items, setItems] = useState([]);
+  const [setValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(null);
+ 
+  // handle input change event
+  const handleInputChange = value => {
+    setValue(value);
+  };
+ 
+  // handle selection
+  const handleChange = value => {
+    setSelectedValue(value);
+  }
+ 
+  const fetchData = () => {
+    return  mockapi.get('/users').then(result => {
+      return result.data.data;
+    });
+  }
 
   return (
     <> 
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-grey">Add Record</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Add</span> Record</h2>
             
           </div>
           <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST">
@@ -55,7 +75,7 @@ const AddRecord = () => {
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
               Category
             </label>
-            <select
+            {/* <select
               id="category"
               name="category"
               autoComplete="category-name"
@@ -64,7 +84,16 @@ const AddRecord = () => {
               <option>United States</option>
               <option>Canada</option>
               <option>Mexico</option>
-            </select>
+            </select> */}
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              value={selectedValue}
+              getOptionLabel={e => e.name}
+              getOptionValue={e => e.id}
+              loadOptions={fetchData}
+              onInputChange={handleInputChange}
+              onChange={handleChange}/>
           </div>
 
           {/* Toggle - Active/Inactive */}
@@ -79,7 +108,7 @@ const AddRecord = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
               
@@ -87,7 +116,11 @@ const AddRecord = () => {
               Add
             </button>
           </div>
+          <div className='flex justify-center'>
+            <a href='/'>Back to Home</a>
+          </div>
           </form>
+          
         </div>
       </div>
     </>
