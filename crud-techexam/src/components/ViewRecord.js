@@ -1,6 +1,8 @@
 import '../index.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Switch } from 'antd';
+import { useParams } from 'react-router-dom';
+import EndpointsService from "../services/endpoints.service";
 
 const ViewRecord = () => {
 
@@ -8,8 +10,6 @@ const ViewRecord = () => {
   const toggler = () => {
     toggle ? setToggle(0): setToggle(1);
   }
-
-  
 
   return (
     <> 

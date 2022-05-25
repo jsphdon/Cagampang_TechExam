@@ -1,5 +1,5 @@
 import http from "../http-common";
-class TechExamService {
+class EndpointsService {
   getAll() {
     return http.get("/users");
   }
@@ -19,4 +19,4 @@ class TechExamService {
 //     return http.delete(`/`);
 //   }
 }
-export default new TechExamService();
+export default new EndpointsService();

@@ -1,84 +1,134 @@
 import '../index.css';
-import React, {Component, useEffect, useState} from 'react';
-import TechExamService from "../services/techexam.service";
+import React, {useState, Component} from 'react';
+// import EndpointsService from "../services/endpoints.service";
 import SearchBox from './SearchBox';
+import Sort from './Sort';
+import TableRowData from './TableRowData';
+import Loader from './Loader';
 
-function TableData() { 
-    const [searchField, setSearchField] = useState("");
-    const [user, setUser] = useState("");
-    const [users, setUsers] = useState([]);
-    
 
-    const loadUsers = () => TechExamService.getAll().then((user) => setUsers(user.data));
-
-    useEffect(() =>{
-        loadUsers();
-    }, []);
-
-    const onSearchChange = (event) => {
-        setSearchField({ searchfield: event.target.value })
+class TableData extends Component {
+    constructor() {
+      super()
+      this.state = {
+        robots: [],
+        searchfield: ''
       }
+    }
+  
+    onSearchChange = (event) => {
+      let test = this.setState({ searchfield: event.target.value });
+      console.log(test);
+    }
+  
+    render() {
+      const { robots, searchfield } = this.state;
+      const filteredUsers = robots.filter(robot =>{
+        return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+      })
+      return(
+          <div>
+              <div className='flex items-center'>
+                  <div className='flex-1 w-full'>
+                      <SearchBox searchChange={this.onSearchChange}/>
+                  </div>
+                  <div className='flex text-right'>
+                      <Sort/>
+                  </div>
+              </div>
+              
+                      
+              <table className="w-full text-sm text-left text-white ">
+              <thead className="text-xs text-white uppercase bg-indigo-600">
+                  <tr>
+                          <th scope="col" className="px-6 py-3">
+                              Name
+                          </th>
+                      <th scope="col" className="px-6 py-3">
+                              Description
+                          </th>
+                      <th scope="col" className="px-6 py-3">
+                              Category
+                          </th>
+                      <th scope="col" className="px-6 py-3">
+                              Status
+                          </th>
+                      <th scope="col" className="px-6 py-3">
+                                      
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                                      
+                          </th>
+                      </tr>
+                  </thead>
+                  <TableRowData unfilteredUsers={filteredUsers}/>
+              </table>
+          </div>
+        );
+    }
+  }
+  
+  export default TableData;
 
-    return  (
+// function TableData() { 
+//     const [searchField, setSearchField] = useState("");
+//     const [unfilteredUsers, setUnfilteredUsers] = useState("");
+//     const [users, setUsers] = useState([]);
 
-        <div>
+//     const onSearchChange = (event) => {
+//         var test = this.setState({ searchfield: event.target.value });
+//         console.log(test)
+//     }
+
+//     const filteredUsers = users.filter(unfil => { 
+//         return unfil.name.toLowerCase().includes(searchField.toLowerCase());
+//     })
+
+//     return  (
+
+//         <div>
             
-            <SearchBox searchChange={onSearchChange}/>
+//             <div className='flex items-center'>
+//                 <div className='flex-1 w-full'>
+//                     <SearchBox searchChange={onSearchChange}/>
+//                 </div>
+//                 <div className='flex text-right'>
+//                     <Sort/>
+//                 </div>
+//             </div>
             
-            <table className="w-full text-sm text-left text-white ">
-                <thead className="text-xs text-white uppercase bg-indigo-600">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Description
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Category
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Status
-                        </th>
-                        <th scope="col" className="px-6 py-3">
+//             <table className="w-full text-sm text-left text-white ">
+//                 <thead className="text-xs text-white uppercase bg-indigo-600">
+//                     <tr>
+//                         <th scope="col" className="px-6 py-3">
+//                             Name
+//                         </th>
+//                         <th scope="col" className="px-6 py-3">
+//                             Description
+//                         </th>
+//                         <th scope="col" className="px-6 py-3">
+//                             Category
+//                         </th>
+//                         <th scope="col" className="px-6 py-3">
+//                             Status
+//                         </th>
+//                         <th scope="col" className="px-6 py-3">
                             
-                        </th>
-                        <th scope="col" className="px-6 py-3">
+//                         </th>
+//                         <th scope="col" className="px-6 py-3">
                             
-                        </th>
-                    </tr>
-                </thead>
+//                         </th>
+//                     </tr>
+//                 </thead>
                 
-                <tbody>
-                {users.map((u) =>
-                    <tr key={u.id} className="border-b dark:bg-indigo-800 dark:border-indigo-700 odd:bg-white even:bg-indigo-50 odd:dark:bg-indigo-800 even:dark:bg-indigo-700">
-                    <th scope="row" className="px-6 py-4 font-bold text-indigo-900 dark:text-white whitespace-nowrap">
-                        {u.name}
-                    </th>
-                    <td className="px-6 py-4 ">
-                        {u.description}
-                    </td>
-                    <td className="px-6 py-4">
-                        Laptop
-                    </td>
-                    <td className="px-6 py-4">
-                        Active
-                    </td>
-                    <td className="px-5 py-4 text-right">
-                        <a href="/view/:id" className="flex items-center justify-center px-4 py-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">View</a>
-                        
-                    </td>
-                    <td className="px-5 py-4 text-right">
-                        <a href="/edit/:id" className="flex items-center justify-center px-4 py-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium">Edit</a>
-                    </td>
-                </tr>
-                )}  
-            </tbody>
+//                 <TableRowData unfilteredUsers={filteredUsers}/>
                 
-            </table>
-        </div>
+//             </table>
+//         </div>
         
-    )
-}
+//     )
+// }
 
-export default TableData;
+// export default TableData;
+
+

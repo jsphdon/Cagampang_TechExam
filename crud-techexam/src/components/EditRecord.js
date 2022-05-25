@@ -1,23 +1,39 @@
 import '../index.css';
-import React, {useState} from 'react';
-import { Switch } from 'antd';
+import React, {Component} from 'react'; 
+import EndpointsService from "../services/endpoints.service";
+// import AsyncSelect from 'react-select/async';
+// import { Switch } from 'antd';
 
-const EditRecord = () => {
+function EditRecord(){
+  
+  // const [inputValue, setValue] = useState('');
+  // const [selectedValue, setSelectedValue] = useState(null);
 
-  const [toggle, setToggle] = useState(0);
-  const toggler = () => {
-    toggle ? setToggle(0): setToggle(1);
-  }
+  // // handle input change event
+  // const handleInputChange = value => {
+  //   setValue(value);
+  // };
 
-  return (
-    <> 
+  // // handle selection
+  // const handleChange = value => {
+  //   setSelectedValue(value);
+  // }
+
+  // const fetchData = () => {
+  //   return  fetch('http://localhost:8000/categories').then(res => {
+  //     return res.json()
+  //   })
+  // }
+    
+    return (
+
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Edit</span> Record</h2>
             
           </div>
-          <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST">
+          <div className="form-group mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10">
           {/* Name */}
           <div>
             <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -27,8 +43,10 @@ const EditRecord = () => {
               type="text"
               name="name"
               id="name"
+              // value={this.state.name}
+              // onChange={this.onChangeName}
               autoComplete="given-name"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>  
 
@@ -42,57 +60,58 @@ const EditRecord = () => {
                 id="description"
                 name="description"
                 rows={3}
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                defaultValue={''}
+                className="form-control shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                // defaultValue={''}
+                // value={this.state.description}
+                // onChange={this.onChangeDescription}
               />
             </div>
           </div>
 
           {/* Dropdown */}
-          <div>
+          {/* <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
               Category
             </label>
-            <select
-              id="category"
-              name="category"
-              autoComplete="category-name"
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-          </div>
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              value={selectedValue}
+              getOptionLabel={e => e.personality_name}
+              getOptionValue={e => e.id}
+              loadOptions={fetchData}
+              onInputChange={handleInputChange}
+              onChange={handleChange}/>
+          </div> */}
 
           {/* Toggle - Active/Inactive */}
-          <div>
+          {/* <div>
             <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
             {toggle ? <span>Active</span>: <span>Inactive</span>}
             </label>
             <Switch onClick={toggler}/>
-          </div>
+          </div> */}
 
-          {/* EDIT BUTTON */}
+          {/* ADD BUTTON */}
           <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              
               </span>
               Edit
             </button>
           </div>
           <div className='flex justify-center'>
-            <a href='/'>Back to Home</a>
+            <a href='/home'>Back to Home</a>
           </div>
-          </form>
+          </div>
+          
         </div>
       </div>
-    </>
-  )
+
+  )  
 }
 
 export default EditRecord;

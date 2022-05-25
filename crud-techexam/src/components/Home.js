@@ -1,15 +1,10 @@
 import '../index.css';
 import React, { Component, useState } from 'react';
-// import SearchBox from './SearchBox';
 import TableData from './TableData';
-import Loader from './Loader';
 
+export default class Home extends Component{
 
-function Home (){
-  
-
-
-
+  render (){
   return (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div className="max-w-5xl w-full mt-8 drop-shadow-xl overflow-hidden sm:rounded-lg bg-white">
@@ -34,9 +29,8 @@ function Home (){
       </div>
     </div>
   </div>
-  );
+  )
 }
-
-export default Home;
+}
 
 

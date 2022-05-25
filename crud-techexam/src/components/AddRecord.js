@@ -1,13 +1,14 @@
 import '../index.css';
 // import React, {useEffect, useState} from 'react'; 
-import React, {Component, useEffect, useState} from 'react'; 
-import TechExamService from "../services/techexam.service";
-// import AsyncSelect from 'react-select/async';
+import React, {useEffect, useState} from 'react'; 
+import EndpointsService from "../services/endpoints.service";
+import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
+import axios from "axios";
+import Select from 'react-select'
 
-export default class AddRecord extends Component {
-  
-  // const [inputValue, setValue] = useState('');
+function AddRecord() {
+
   // const [selectedValue, setSelectedValue] = useState(null);
 
   // // handle input change event
@@ -18,63 +19,15 @@ export default class AddRecord extends Component {
   // // handle selection
   // const handleChange = value => {
   //   setSelectedValue(value);
-  // }
+  // };
 
-  // const fetchData = () => {
-  //   return  fetch('http://localhost:8000/categories').then(res => {
+  // const getCat = fetchCategories(){
+  //   return fetch('http://localhost:8000/categories').then(res => {
   //     return res.json()
   //   })
   // }
 
-  constructor(props) {
-    super(props);
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.addRecord = this.addRecord.bind(this);
 
-    this.state = {
-      id: null,
-      name: "",
-      description: "",
-    };
-  }
-
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value
-    });
-  }
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-
-  
-
-  addRecord() {
-    var data = {
-      name: this.state.name,
-      description: this.state.description
-    };
-    TechExamService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          name: response.data.name,
-          description: response.data.description,
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  
-
-  render (){
-    
     return (
 
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -84,7 +37,7 @@ export default class AddRecord extends Component {
             
           </div>
           {/* <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST"> */}
-          <div className="form-group mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10">
+          <form className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10">
           {/* Name */}
           <div>
             <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -94,8 +47,8 @@ export default class AddRecord extends Component {
               type="text"
               name="name"
               id="name"
-              value={this.state.name}
-              onChange={this.onChangeName}
+              // value={this.state.name}
+              // onChange={this.onChangeName}
               autoComplete="given-name"
               className="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
@@ -113,8 +66,8 @@ export default class AddRecord extends Component {
                 rows={3}
                 className="form-control shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                 // defaultValue={''}
-                value={this.state.description}
-                onChange={this.onChangeDescription}
+                // value={this.state.description}
+                // onChange={this.onChangeDescription}
               />
             </div>
           </div>
@@ -127,12 +80,12 @@ export default class AddRecord extends Component {
             <AsyncSelect
               cacheOptions
               defaultOptions
-              value={selectedValue}
-              getOptionLabel={e => e.personality_name}
+              value={this.state.category_name}
+              getOptionLabel={e => e.category_name}
               getOptionValue={e => e.id}
-              loadOptions={fetchData}
-              onInputChange={handleInputChange}
-              onChange={handleChange}/>
+              loadOptions={this.fetchData}
+              onChange={this.onChangeCategory}/>
+            <Select options={this.state.category} onChange={this.onChangeCategory} />
           </div> */}
 
           {/* Toggle - Active/Inactive */}
@@ -147,7 +100,6 @@ export default class AddRecord extends Component {
           <div>
             <button
               type="submit"
-              onClick={this.addRecord}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -158,14 +110,13 @@ export default class AddRecord extends Component {
           <div className='flex justify-center'>
             <a href='/home'>Back to Home</a>
           </div>
-          </div>
+          </form>
           
         </div>
       </div>
 
   )
-  }
   
 }
 
-// export default AddRecord;
+export default AddRecord;

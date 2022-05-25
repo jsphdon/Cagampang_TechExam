@@ -15,11 +15,11 @@
     "react-router-dom": "^5.3.3",
     "react-scripts": "5.0.1",
     "react-select": "^5.3.2",
+    "react-toastify": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npx json-server --watch categories.json --port 8000\" \"npx json-server --watch users.json --port 8001\"",
-    
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
