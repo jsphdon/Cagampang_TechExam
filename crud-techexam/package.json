@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.20.6",
     "axios": "^0.27.2",
+    "concurrently": "^7.2.1",
     "json-server": "^0.17.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -17,7 +18,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npx json-server --watch categories.json --port 8000\" \"npx json-server --watch users.json --port 8001\"",
+    
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

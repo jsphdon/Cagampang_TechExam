@@ -1,45 +1,90 @@
 import '../index.css';
-import React, {useState} from 'react';
-import AsyncSelect from 'react-select/async';
-import mockapi from '../mockapi';
+// import React, {useEffect, useState} from 'react'; 
+import React, {Component, useEffect, useState} from 'react'; 
+import TechExamService from "../services/techexam.service";
+// import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
 
-const AddRecord = () => {
+export default class AddRecord extends Component {
+  
+  // const [inputValue, setValue] = useState('');
+  // const [selectedValue, setSelectedValue] = useState(null);
 
-  const [toggle, setToggle] = useState(0);
-  const toggler = () => {
-    toggle ? setToggle(0): setToggle(1);
+  // // handle input change event
+  // const handleInputChange = value => {
+  //   setValue(value);
+  // };
+
+  // // handle selection
+  // const handleChange = value => {
+  //   setSelectedValue(value);
+  // }
+
+  // const fetchData = () => {
+  //   return  fetch('http://localhost:8000/categories').then(res => {
+  //     return res.json()
+  //   })
+  // }
+
+  constructor(props) {
+    super(props);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.addRecord = this.addRecord.bind(this);
+
+    this.state = {
+      id: null,
+      name: "",
+      description: "",
+    };
   }
 
-  // const [items, setItems] = useState([]);
-  const [setValue] = useState('');
-  const [selectedValue, setSelectedValue] = useState(null);
- 
-  // handle input change event
-  const handleInputChange = value => {
-    setValue(value);
-  };
- 
-  // handle selection
-  const handleChange = value => {
-    setSelectedValue(value);
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
   }
- 
-  const fetchData = () => {
-    return  mockapi.get('/users').then(result => {
-      return result.data.data;
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
     });
   }
 
-  return (
-    <> 
+  
+
+  addRecord() {
+    var data = {
+      name: this.state.name,
+      description: this.state.description
+    };
+    TechExamService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          name: response.data.name,
+          description: response.data.description,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  
+
+  render (){
+    
+    return (
+
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Add</span> Record</h2>
             
           </div>
-          <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST">
+          {/* <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST"> */}
+          <div className="form-group mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10">
           {/* Name */}
           <div>
             <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -49,8 +94,10 @@ const AddRecord = () => {
               type="text"
               name="name"
               id="name"
+              value={this.state.name}
+              onChange={this.onChangeName}
               autoComplete="given-name"
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>  
 
@@ -64,67 +111,61 @@ const AddRecord = () => {
                 id="description"
                 name="description"
                 rows={3}
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                defaultValue={''}
+                className="form-control shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                // defaultValue={''}
+                value={this.state.description}
+                onChange={this.onChangeDescription}
               />
             </div>
           </div>
 
           {/* Dropdown */}
-          <div>
+          {/* <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
               Category
             </label>
-            {/* <select
-              id="category"
-              name="category"
-              autoComplete="category-name"
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select> */}
             <AsyncSelect
               cacheOptions
               defaultOptions
               value={selectedValue}
-              getOptionLabel={e => e.name}
+              getOptionLabel={e => e.personality_name}
               getOptionValue={e => e.id}
               loadOptions={fetchData}
               onInputChange={handleInputChange}
               onChange={handleChange}/>
-          </div>
+          </div> */}
 
           {/* Toggle - Active/Inactive */}
-          <div>
+          {/* <div>
             <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
             {toggle ? <span>Active</span>: <span>Inactive</span>}
             </label>
             <Switch onClick={toggler}/>
-          </div>
+          </div> */}
 
           {/* ADD BUTTON */}
           <div>
             <button
               type="submit"
+              onClick={this.addRecord}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              
               </span>
               Add
             </button>
           </div>
           <div className='flex justify-center'>
-            <a href='/'>Back to Home</a>
+            <a href='/home'>Back to Home</a>
           </div>
-          </form>
+          </div>
           
         </div>
       </div>
-    </>
+
   )
+  }
+  
 }
 
-export default AddRecord;
+// export default AddRecord;

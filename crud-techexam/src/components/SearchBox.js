@@ -2,6 +2,7 @@ import React from 'react';
 
 const SearchBox = ({ searchfield, searchChange }) => {
   return (
+    <div className='m-4'>
       <input
         className='form-control
         w-full
@@ -20,6 +21,8 @@ const SearchBox = ({ searchfield, searchChange }) => {
         placeholder='Search here'
         onChange={searchChange}
       />
+    </div>
+      
   );
 }
 
