@@ -1,18 +1,9 @@
 import '../index.css';
-import React, {useEffect, useState} from 'react';
-import EndpointsService from "../services/endpoints.service";
+import React  from 'react';
 import {Link} from 'react-router-dom';
 
 const TableRowData = ({users}) => {
     
-    // const [users, setUsers] = useState([]);
-
-    // const loadUsers = async () => EndpointsService.getAll().then((user) => setUsers(user.data));
-
-    // useEffect(() =>{
-    //     loadUsers();
-    // }, []);
-
     return (
         <>
         {users && users.map((u, i) => {

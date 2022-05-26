@@ -1,18 +1,18 @@
 {
   "users": [
     {
-      "name": "name",
-      "description": "description",
+      "name": "Thor",
+      "description": "The son of Odin uses his abilities as the God of Thunder to protect Asgard and planet Earth alike.",
       "category": {
-        "id": "1",
-        "category_name": "Average"
+        "id": "2",
+        "category_name": "Reserved"
       },
       "status": true,
       "id": 1
     },
     {
-      "name": "name2",
-      "description": "Des2",
+      "name": "Iron Man",
+      "description": "Tony Stark, best known by his superhero persona Iron Man.",
       "category": {
         "id": "4",
         "category_name": "Self-centered"
@@ -21,14 +21,24 @@
       "id": 2
     },
     {
-      "name": "name3",
-      "description": "desc3",
+      "name": "Superman",
+      "description": "Clark Joseph Kent, best known by his superhero persona Superman.",
       "category": {
         "id": "3",
         "category_name": "Role-model"
       },
       "status": true,
       "id": 3
+    },
+    {
+      "name": "Batman",
+      "description": "Bruce Wayne, best known by his superhero persona Batman.",
+      "category": {
+        "id": "2",
+        "category_name": "Reserved"
+      },
+      "status": false,
+      "id": 4
     }
   ]
 }
