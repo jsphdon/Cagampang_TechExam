@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "name": "name12",
+      "description": "desc13",
+      "category": {
+        "id": "1",
+        "category_name": "Average"
+      },
+      "status": true,
+      "id": 1
+    },
+    {
+      "name": "name2",
+      "description": "desc2",
+      "category": {
+        "id": "2",
+        "category_name": "Reserved"
+      },
+      "status": true,
+      "id": 2
+    },
+    {
+      "name": "name3",
+      "description": "desc3",
+      "category": {
+        "id": "3",
+        "category_name": "Role-model"
+      },
+      "status": false,
+      "id": 3
+    }
+  ]
+}

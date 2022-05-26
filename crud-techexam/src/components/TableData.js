@@ -37,7 +37,6 @@ class TableData extends Component {
                   </div>
               </div>
               
-                      
               <table className="w-full text-sm text-left text-white ">
               <thead className="text-xs text-white uppercase bg-indigo-600">
                   <tr>

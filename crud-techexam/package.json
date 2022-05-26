@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"npx json-server --watch categories.json --port 8000\" \"npx json-server --watch users.json --port 8001\"",
+    "start": "concurrently \"react-scripts start\" \"npx json-server --watch db.json --port 8000\" \"npx json-server --watch categories.json --port 8001\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

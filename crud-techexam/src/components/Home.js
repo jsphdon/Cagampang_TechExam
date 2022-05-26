@@ -1,5 +1,5 @@
 import '../index.css';
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import TableData from './TableData';
 
 export default class Home extends Component{
