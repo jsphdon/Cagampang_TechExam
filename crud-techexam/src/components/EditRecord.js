@@ -3,30 +3,31 @@ import React, {useState, useEffect} from 'react';
 import EndpointsService from "../services/endpoints.service";
 import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
-import { useHistory } from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from "react-router-dom";
 import Loader from './Loader';
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
+
 
 function EditRecord() {
   let history = useHistory();
-  const successToast = ()=>{
-    toast.success('Record UPDATED!')
-}
 
   const {id} = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState(null);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState('');
   
 
-  // handle selection
-  const handleChange = value => {
+  // handle category
+  const handleCategory = value => {
     setCategory(value);
   };
+
+  // handle status
+  const handleStatus = event => {
+    setStatus(event);
+  };
+
+  
 
   const fetchCategories = () =>{
     return fetch('http://localhost:8001/categories').then(res => {
@@ -39,7 +40,7 @@ function EditRecord() {
     users: {
       name: '',
       description: '',
-      category: {},
+      category: '',
       status: '',
     },
   });
@@ -77,22 +78,26 @@ function EditRecord() {
       category: category,
       status: status
     };
-    event.preventDefault();
-    try{
-      let res = await EndpointsService.update(id, data);
-      if(res){
-        // window.alert("Record UPDATED!")
-        successToast();
-        history.push('/');
-      }
-    }catch(e){
-      window.alert("Something went wrong")
-      console.log(e);
-    }
+    console.log(data)
+    // event.preventDefault();
+    // try{
+    //   let res = await EndpointsService.update(id, data);
+    //   if(res){
+    //     window.alert("Record UPDATED!")
+    //     history.push('/');
+    //   }else{
+    //     window.alert("Something went wrong")
+    //   }
+    // }catch(e){
+    //   window.alert("Something went wrong")
+    //   console.log(e);
+    // }
   }
+  
   
 
   let {loading, users} = state;
+
   return (
     
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -100,13 +105,11 @@ function EditRecord() {
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Edit</span> Record</h2>
         </div>
-        {/* <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST"> */}
-        
         {
           loading ? <Loader/> : <div>
             {
         Object.keys(users).length > 0 &&
-        <div className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10">
+        <div className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10" >
         {/* Name */}
         <div>
           <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -152,16 +155,13 @@ function EditRecord() {
             getOptionLabel={e => e.category_name}
             getOptionValue={e => e.id}
             loadOptions={fetchCategories}
-            onChange={handleChange}
+            onChange={handleCategory}
             />
         </div>
 
         {/* Toggle - Active/Inactive */}
         <div>
-          <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
-          {users.status ? <span>Active</span>: <span>Inactive</span>}
-          </label>
-          <Switch defaultValue={users.status} onChange={(e) => setStatus(!status)}/>
+          <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={users.status} onChange={handleStatus}/>
         </div>
 
         {/* Edit BUTTON */}
@@ -184,8 +184,7 @@ function EditRecord() {
         }
         
       </div>
-    </div>
-
+    </div> 
 )
 }
 

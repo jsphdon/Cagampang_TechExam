@@ -1,8 +1,8 @@
 {
   "users": [
     {
-      "name": "name12",
-      "description": "desc13",
+      "name": "name",
+      "description": "description",
       "category": {
         "id": "1",
         "category_name": "Average"
@@ -12,12 +12,12 @@
     },
     {
       "name": "name2",
-      "description": "desc2",
+      "description": "Des2",
       "category": {
-        "id": "2",
-        "category_name": "Reserved"
+        "id": "4",
+        "category_name": "Self-centered"
       },
-      "status": true,
+      "status": false,
       "id": 2
     },
     {
@@ -27,7 +27,7 @@
         "id": "3",
         "category_name": "Role-model"
       },
-      "status": false,
+      "status": true,
       "id": 3
     }
   ]

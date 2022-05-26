@@ -1,16 +1,17 @@
 import '../index.css';
-import React, {useEffect, useState} from 'react'; 
+import React, { useState} from 'react'; 
 import EndpointsService from "../services/endpoints.service";
 import { Switch } from 'antd';
 import { useHistory } from "react-router-dom";
 import AsyncSelect from 'react-select/async';
+
 
 function AddRecord() {
   let history = useHistory();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState('');
   const [status, setStatus] = useState(false);
   
 
@@ -59,7 +60,7 @@ function AddRecord() {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Add</span> Record</h2>
           
         </div>
-        <div className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10">
+        <form className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10" onSubmit={addRecord}>
         {/* Name */}
         <div>
           <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -69,6 +70,7 @@ function AddRecord() {
             type="text"
             name="name"
             id="name"
+            required
             onChange={(e) => setName(e.target.value)}
             className="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           />
@@ -83,7 +85,7 @@ function AddRecord() {
             <textarea
               id="description"
               name="description"
-
+              required
               rows={3}
               className="form-control shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
               onChange={(e) => setDescription(e.target.value)}
@@ -97,7 +99,6 @@ function AddRecord() {
         <label htmlFor="category" className="block text-sm font-medium text-gray-700">
             Category
         </label>
-
            <AsyncSelect
             cacheOptions
             defaultOptions
@@ -111,12 +112,13 @@ function AddRecord() {
 
         {/* Toggle - Active/Inactive */}
         <div>
-          <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
-          {status ? <span>Active</span>: <span>Inactive</span>}
+          {/* <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
+          {status ? <span>Active</span> : <span>Inactive</span>}
           </label>
           <Switch 
-          onChange={(e) => setStatus(!status)}
-          />
+          onChange={() => setStatus(!status)}
+          /> */}
+          <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={() => setStatus(!status)}/>
         </div>
 
         {/* ADD BUTTON */}
@@ -124,7 +126,7 @@ function AddRecord() {
           <button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
-            onClick={addRecord}
+            
           >
             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
             </span>
@@ -134,7 +136,7 @@ function AddRecord() {
         <div className='flex justify-center'>
           <a href='/home'>Back to Home</a>
         </div>
-        </div>
+        </form>
         
       </div>
     </div>

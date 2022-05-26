@@ -20,8 +20,8 @@ class EndpointsService {
   delete(id) {
     return http.delete(`/users/${id}`);
   }
-//   deleteAll() {
-//     return http.delete(`/`);
-//   }
+  deleteAll() {
+    return http.delete(`${this.crudURL}/users`);
+  }
 }
 export default new EndpointsService();

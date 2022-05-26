@@ -1,11 +1,9 @@
 import '../index.css';
 import React, {useState, useEffect} from 'react'; 
 import EndpointsService from "../services/endpoints.service";
-import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
 import { useHistory, useParams} from "react-router-dom";
 import Loader from './Loader';
-import CategoryDropDown from './CategoryDropDown';
 
 let ViewRecord = () => {
   let history = useHistory();
@@ -34,12 +32,9 @@ let ViewRecord = () => {
     }
   }, [id])
   
-  // const deleteRecord = () => {
-  //   console.log(id);
-  // }
-
   // delete Record
   const deleteRecord = async (event) => {
+    window.confirm("Do you want to delete this record?");
     var userId = {
       id: id
     };
@@ -65,8 +60,6 @@ let ViewRecord = () => {
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>View</span> Record</h2>
         </div>
-        {/* <form className="mt-8 space-y-6 drop-shadow-xl overflow-hidden sm:rounded-md bg-white py-10 px-10" action="#" method="POST"> */}
-        
         {
           loading ? <Loader/> : <div>
             {
@@ -121,10 +114,7 @@ let ViewRecord = () => {
 
         {/* Toggle - Active/Inactive */}
         <div>
-          <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
-          {users.status ? <span>Active</span>: <span>Inactive</span>}
-          </label>
-          <Switch checked={users.status} readOnly/>
+        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={users.status} disabled/>
         </div>
 
         {/* Delete BUTTON */}
