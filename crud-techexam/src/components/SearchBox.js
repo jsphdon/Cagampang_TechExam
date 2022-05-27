@@ -4,6 +4,7 @@ const SearchBox = ({ searchfield, searchChange }) => {
   return (
     <div className='m-4'>
       <input
+        value={searchfield}
         className='form-control
         w-full
         block
@@ -22,7 +23,7 @@ const SearchBox = ({ searchfield, searchChange }) => {
         onChange={searchChange}
       />
     </div>
-      
+
   );
 }
 
