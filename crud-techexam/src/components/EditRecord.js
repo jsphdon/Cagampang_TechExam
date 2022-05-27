@@ -5,10 +5,29 @@ import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
 import { useHistory, useParams } from "react-router-dom";
 import Loader from './Loader';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EditRecord() {
   let history = useHistory();
+  const successNotify = () => toast.success('Record UPDATED!', {
+    position: "top-center",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+  const failNotify = () => toast.error('Something went wrong', {
+    position: "top-center",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   const { id } = useParams();
   const [name, setName] = useState('');
@@ -79,17 +98,16 @@ function EditRecord() {
       status: status
     };
     console.log(data)
+
     event.preventDefault();
     try {
       let res = await EndpointsService.update(id, data);
       if (res) {
-        window.alert("Record UPDATED!")
+        successNotify();
         history.push('/');
-      } else {
-        window.alert("Something went wrong")
       }
     } catch (e) {
-      window.alert("Something went wrong")
+      failNotify();
       console.log(e);
     }
   }
@@ -175,6 +193,7 @@ function EditRecord() {
                     </span>
                     Edit
                   </button>
+
                 </div>
                 <div className='flex justify-center'>
                   <a href='/home'>Back to Home</a>
