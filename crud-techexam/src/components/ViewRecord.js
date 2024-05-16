@@ -7,7 +7,7 @@ import Loader from './Loader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-let ViewRecord = () => {
+function ViewRecord() {
   let history = useHistory();
   const successNotify = () => toast.success('Record DELETED!', {
     position: "top-center",

@@ -39,7 +39,7 @@ function TableData() {
     setStatus(currentStatus);
   };
 
-  // Search and Filter Function
+  // SEARCH AND FILTER FUNCTION
   const searchFilter = () => {
 
     let newSearch = [];
@@ -69,7 +69,7 @@ function TableData() {
 
   return (
     <div>
-      <div className='flex items-center'>
+      <div className='flex items-center flex-col sm:flex-row'>
         <div className='flex-1 w-full'>
           <SearchBox searchChange={onSearchChange} searchfield={search} />
         </div>

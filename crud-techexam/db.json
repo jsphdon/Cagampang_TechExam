@@ -49,16 +49,6 @@
       },
       "status": true,
       "id": 5
-    },
-    {
-      "name": "Gagamboy",
-      "description": "Gagamboy Filipino",
-      "category": {
-        "id": "4",
-        "category_name": "Self-centered"
-      },
-      "status": true,
-      "id": 6
     }
   ]
 }

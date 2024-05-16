@@ -10,8 +10,8 @@ export default class Home extends Component {
         <div className="max-w-5xl w-full mt-8 drop-shadow-xl overflow-hidden sm:rounded-lg bg-white">
 
           {/* HEADER */}
-          <div className='flex items-center p-5 bg-indigo-900'>
-            <div className='flex-1'>
+          <div className='flex items-center p-5 bg-indigo-900 flex-col md:flex-row'>
+            <div className='flex-1 pb-4 md:pb-0'>
               <h1 className='text-white text-lg'>CRUD - REACT EXAM</h1>
             </div>
             <div className='flex-1 items-center text-right'>
