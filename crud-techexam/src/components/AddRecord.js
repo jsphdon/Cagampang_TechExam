@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function AddRecord() {
   let history = useHistory();
+
+  // Toast Notification (Success)
   const successNotify = () => toast.success('Record ADDED!', {
     position: "top-center",
     autoClose: 4000,
@@ -19,6 +21,8 @@ function AddRecord() {
     draggable: true,
     progress: undefined,
   });
+
+  // Toast Notification (Failed)
   const failNotify = () => toast.error('Something went wrong', {
     position: "top-center",
     autoClose: 4000,

@@ -82,17 +82,9 @@ function EditRecord() {
     }
   }, [id])
 
-  // const editRecord = () => {
-  //   console.log(users.id);
-  //   console.log(users.name);
-  //   console.log(users.description);
-  //   console.log(users.category);
-  //   console.log(users.status);
-  // }
-
   // EDIT Function
   const editRecord = async (event) => {
-    var data = {
+    let data = {
       name: users.name,
       description: users.description,
       category: users.category,
