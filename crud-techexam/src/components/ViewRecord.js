@@ -55,7 +55,7 @@ let ViewRecord = () => {
   // delete Record
   const deleteRecord = async (event) => {
     window.confirm("Do you want to delete this record?");
-    var userId = {
+    let userId = {
       id: id
     };
     event.preventDefault();
@@ -146,6 +146,7 @@ let ViewRecord = () => {
                   >
                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                     </span>
+                    {''}
                     Delete
                   </button>
                 </div>

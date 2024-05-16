@@ -46,15 +46,8 @@ function AddRecord() {
     })
   }
 
-  //   const addRecord = () => {
-  //     console.log(name);
-  //     console.log(description);
-  //     console.log(category);
-  //     console.log(status);
-  // }
-
   const addRecord = async (event) => {
-    var data = {
+    let data = {
       name: name,
       description: description,
       category: category,
@@ -150,6 +143,7 @@ function AddRecord() {
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
               </span>
+              {' '}
               Add
             </button>
           </div>
