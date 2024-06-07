@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "name": "Thor",
+      "description": "The son of Odin uses his abilities as the God of Thunder to protect Asgard and planet Earth alike.",
+      "category": {
+        "id": "2",
+        "category_name": "Reserved"
+      },
+      "status": false,
+      "id": 1
+    },
+    {
+      "name": "Iron Man",
+      "description": "Tony Stark, best known by his superhero persona Iron Man.",
+      "category": {
+        "id": "4",
+        "category_name": "Self-centered"
+      },
+      "status": false,
+      "id": 2
+    },
+    {
+      "name": "Superman",
+      "description": "Clark Joseph Kent, best known by his superhero persona Superman.",
+      "category": {
+        "id": "3",
+        "category_name": "Role-model"
+      },
+      "status": true,
+      "id": 3
+    },
+    {
+      "name": "Batman",
+      "description": "Bruce Wayne, best known by his superhero persona Batman.",
+      "category": {
+        "id": "2",
+        "category_name": "Reserved"
+      },
+      "status": false,
+      "id": 4
+    },
+    {
+      "name": "Spider-Man",
+      "description": "American teenager Peter Parker, a poor sickly orphan, is bitten by a radioactive spider. As a result of the bite, he gains superhuman strength, speed, and agility, along with the ability to cling to walls, turning him into Spider-Man.",
+      "category": {
+        "id": "3",
+        "category_name": "Role-model"
+      },
+      "status": true,
+      "id": 5
+    }
+  ]
+}
