@@ -1,4 +1,4 @@
-# A React Application that has the CRUD functionalities
+# A React Application that has the CRUD function and has Search and Filter functions
 
 run
 
