@@ -85,24 +85,24 @@ function TableData() {
       </div>
 
       <table className="w-full text-sm text-left text-white ">
-        <thead className="text-xs text-white uppercase bg-indigo-600">
+        <thead className="text-xs text-black uppercase bg-white border">
           <tr>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
               Name
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
               Description
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
               Category
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
               Status
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
 
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border">
 
             </th>
           </tr>
