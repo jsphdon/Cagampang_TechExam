@@ -5,7 +5,7 @@ import TableRowData from './TableRowData';
 import FilterButtons from './FilterButtons';
 
 
-function TableData() {
+function TableData({ onDataLoaded }) {
   const [users, setUsers] = useState([]);
   const [duplicateUsers, setDuplicateUsers] = useState([]);
   const [status, setStatus] = useState(null);
@@ -17,18 +17,19 @@ function TableData() {
         return response.json();
       }).then(u => {
         setUsers(u);
-        setDuplicateUsers(u)
+        setDuplicateUsers(u);
+        onDataLoaded(u.length > 0);
       });
     } else {
       searchFilter();
     }
-  }, [status, search])
+  }, [status, search, onDataLoaded])
 
   // SEARCH FILTER
   const onSearchChange = useCallback((event) => {
     let target = event.target.value;
     setSearch(target);
-  })
+  }, [])
 
   const menuStatus = [...new Set(users.map((stat) => stat.status))];
 
