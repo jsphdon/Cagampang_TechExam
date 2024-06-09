@@ -1,14 +1,15 @@
 import React from 'react';
 
-export default function SearchBox({ searchfield, searchChange }) {
+const SearchBox = ({ searchfield, searchChange, clearSearch }) => {
   return (
-    <div className='m-4'>
+    <div className='m-4 relative'>
       <input
         value={searchfield}
         className='form-control
         w-full
         block
         p-3
+        pr-10
         text-base
         font-normal
         text-gray-700
@@ -22,9 +23,16 @@ export default function SearchBox({ searchfield, searchChange }) {
         placeholder='Search here'
         onChange={searchChange}
       />
+      {searchfield.length > 0 && (
+        <button
+          onClick={clearSearch}
+          className='absolute inset-y-0 right-0 px-4 py-2 text-red-500 font-semibold ease-in-out transition-all'
+        >
+          Clear
+        </button>
+      )}
     </div>
-
   );
-}
+};
 
-// export default SearchBox;
+export default SearchBox;

@@ -1,14 +1,24 @@
 {
   "users": [
     {
-      "name": "Hello",
-      "description": "Hello Testing",
+      "name": "Active",
+      "description": "Active",
+      "category": {
+        "id": "3",
+        "category_name": "Role-model"
+      },
+      "status": true,
+      "id": 1
+    },
+    {
+      "name": "Inactive",
+      "description": "Hello I'm inactive",
       "category": {
         "id": "2",
         "category_name": "Reserved"
       },
-      "status": true,
-      "id": 1
+      "status": false,
+      "id": 2
     }
   ]
 }

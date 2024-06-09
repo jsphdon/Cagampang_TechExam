@@ -5,7 +5,7 @@ import TableRowData from './TableRowData';
 import FilterButtons from './FilterButtons';
 
 
-function TableData({ onDataLoaded }) {
+function TableData() {
   const [users, setUsers] = useState([]);
   const [duplicateUsers, setDuplicateUsers] = useState([]);
   const [status, setStatus] = useState(null);
@@ -18,12 +18,11 @@ function TableData({ onDataLoaded }) {
       }).then(u => {
         setUsers(u);
         setDuplicateUsers(u);
-        onDataLoaded(u.length > 0);
       });
     } else {
       searchFilter();
     }
-  }, [status, search, onDataLoaded])
+  }, [status, search])
 
   // SEARCH FILTER
   const onSearchChange = useCallback((event) => {
@@ -35,9 +34,15 @@ function TableData({ onDataLoaded }) {
 
   // INACTIVE/ACTIVE FILTER
   const filterStatus = useCallback((curStat) => {
-    const currentStatus = curStat === 1;
-    setStatus(currentStatus);
-  });
+    setStatus(prevStatus => {
+      // If current status is null or opposite of current status is clicked, set the opposite status
+      if (prevStatus === null || prevStatus !== curStat) {
+        return curStat;
+      } else { // If the same status is clicked again, reset to null (show all)
+        return null;
+      }
+    });
+  }, []);
 
   // SEARCH AND FILTER FUNCTION
   const searchFilter = () => {
@@ -62,57 +67,55 @@ function TableData({ onDataLoaded }) {
   }
 
   // Clear Input Function
-  const clear = () => {
-    setStatus(null);
+  const clearInput = () => {
     setSearch("");
+  }
+
+  const resetFilter = () => {
+    setStatus(null);
   }
 
   return (
     <div>
       <div className='flex items-center flex-col sm:flex-row'>
         <div className='flex-1 w-full'>
-          <SearchBox searchChange={onSearchChange} searchfield={search} />
+          <SearchBox searchChange={onSearchChange} searchfield={search} clearSearch={() => clearInput()} />
         </div>
         <div className='flex text-right'>
-          <div className='mt-4 mb-4'>
-            <button
-              onClick={() => clear()}
-              className="overflow-hidden text-white bg-red-700 text-sm px-4 py-2 rounded-lg group mr-4 font-bold">
-              Clear Input
-            </button>
-          </div>
-          <FilterButtons filterStatus={filterStatus} menuStatus={menuStatus} />
+          <FilterButtons filterStatus={filterStatus} menuStatus={menuStatus} resetFilter={() => resetFilter()} />
         </div>
       </div>
 
-      <table className="w-full text-sm text-left text-white ">
-        <thead className="text-xs text-black uppercase bg-white border">
-          <tr>
-            <th scope="col" className="px-6 py-3 border">
-              Name
-            </th>
-            <th scope="col" className="px-6 py-3 border">
-              Description
-            </th>
-            <th scope="col" className="px-6 py-3 border">
-              Category
-            </th>
-            <th scope="col" className="px-6 py-3 border">
-              Status
-            </th>
-            <th scope="col" className="px-6 py-3 border">
+      <div className='overflow-x-scroll'>
+        <table className="w-full text-sm text-left text-white ">
+          <thead className="text-xs text-black uppercase bg-white border">
+            <tr>
+              <th scope="col" className="px-6 py-3 border">
+                Name
+              </th>
+              <th scope="col" className="px-6 py-3 border">
+                Description
+              </th>
+              <th scope="col" className="px-6 py-3 border">
+                Category
+              </th>
+              <th scope="col" className="px-6 py-3 border">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
 
-            </th>
-            <th scope="col" className="px-6 py-3 border">
+              </th>
+              <th scope="col" className="px-6 py-3">
 
-            </th>
-          </tr>
-        </thead>
+              </th>
+            </tr>
+          </thead>
 
-        <TableRowData users={duplicateUsers} />
+          <TableRowData users={duplicateUsers} />
 
-      </table>
-    </div>
+        </table>
+      </div>
+    </div >
 
   )
 }
