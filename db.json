@@ -1,16 +1,6 @@
 {
   "users": [
     {
-      "name": "Active",
-      "description": "Active",
-      "category": {
-        "id": "3",
-        "category_name": "Role-model"
-      },
-      "status": true,
-      "id": 1
-    },
-    {
       "name": "Inactive",
       "description": "Hello I'm inactive",
       "category": {
@@ -19,6 +9,16 @@
       },
       "status": false,
       "id": 2
+    },
+    {
+      "name": "active",
+      "description": "active",
+      "category": {
+        "id": "4",
+        "category_name": "Self-centered"
+      },
+      "status": true,
+      "id": 3
     }
   ]
 }

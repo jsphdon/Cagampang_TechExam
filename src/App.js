@@ -1,7 +1,7 @@
 import Home from './components/Home';
-import AddRecord from './components/AddRecord';
-import EditRecord from './components/EditRecord';
-import ViewRecord from './components/ViewRecord';
+import Add from './components/Add';
+import Edit from './components/Edit';
+import View from './components/View';
 import './index.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -16,9 +16,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path={["/", "/home"]} component={Home} />
-          <Route path="/add" component={AddRecord} />
-          <Route path="/view/:id" component={ViewRecord} />
-          <Route path="/edit/:id" component={EditRecord} />
+          <Route path="/add" component={Add} />
+          <Route path="/view/:id" component={View} />
+          <Route path="/edit/:id" component={Edit} />
         </Switch>
       </Router>
     </div>

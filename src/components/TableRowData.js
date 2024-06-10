@@ -1,41 +1,78 @@
 import '../index.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-const TableRowData = ({ users }) => {
+const StatusBadge = ({ status }) => (
+  <p className={`mb-0 text-center font-semibold px-2 py-2 rounded-lg text-white ${status ? 'bg-green-500' : 'bg-red-500'}`}>
+    {status ? 'Active' : 'Inactive'}
+  </p>
+);
+
+const TableCell = ({ children, className = '' }) => (
+  <td className={`px-6 py-4 ${className}`}>
+    {children}
+  </td>
+);
+
+const TableRow = ({ user, onDelete }) => {
+  const history = useHistory();
+
+  const handleRowClick = () => {
+    history.push(`/view/${user.id}`);
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDelete(user.id);
+  };
 
   return (
-    <>
-      {users.map((u, i) => {
-        return (
-          <tbody key={i}>
-            <tr id={u.id} className="border-b bg-white text-black">
-              <th scope="row" className="px-6 py-4 font-bold text-black whitespace-nowrap">
-                {u.name}
-              </th>
-              <td className="px-6 py-4 block whitespace-nowrap overflow-hidden text-ellipsis w-[28rem]">
-                {u.description}
-              </td>
-              <td className="px-6 py-4">
-                {u.category.category_name}
-              </td>
-              <td className={`px-6 py-4`}>
-                <p className={`mb-0 text-center font-semibold px-2 py-2 rounded-lg text-white ${u.status ? 'bg-green-500' : 'bg-red-500'}`}>{u.status ? 'Active' : 'Inactive'}</p>
-              </td>
-              <td className="px-5 py-4 text-right">
-                <Link to={`/view/${u.id}`} className="flex items-center justify-center px-4 py-2 overflow-hidden text-sm font-bold text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white hover:from-pink-500 hover:to-yellow-500 dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">View</Link>
+    <tr
+      id={user.id}
+      className="border-b bg-white text-black cursor-pointer hover:bg-gray-100"
+      onClick={handleRowClick}
+    >
+      <TableCell className="font-bold text-black whitespace-nowrap">
+        {user.name}
+      </TableCell>
+      <TableCell className="whitespace-nowrap overflow-hidden text-ellipsis w-[28rem]">
+        {user.description}
+      </TableCell>
+      <TableCell>
+        {user.category.category_name}
+      </TableCell>
+      <TableCell>
+        <StatusBadge status={user.status} />
+      </TableCell>
+      {/* Edit Button */}
+      <TableCell className="text-right">
+        <Link
+          to={`/edit/${user.id}`}
+          onClick={(e) => e.stopPropagation()}
+          className="text-center text-white border border-blue-500 duration-300 rounded-lg hover:bg-white bg-blue-500 px-4 py-2 text-md font-semibold"
+        >
+          Edit
+        </Link>
+      </TableCell>
+      {/* Delete Button */}
+      <TableCell className="text-right">
+        <button
+          onClick={handleDelete}
+          className="text-center text-white hover:text-red-600 border border-red-500 duration-300 rounded-lg hover:bg-white bg-red-500 px-4 py-2 text-md font-semibold"
+        >
+          Delete
+        </button>
+      </TableCell>
+    </tr>
+  );
+};
 
-              </td>
-              <td className="px-5 py-4 text-right">
-                <Link to={`/edit/${u.id}`} className="flex items-center justify-center px-4 py-2 overflow-hidden text-sm text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white hover:from-pink-500 hover:to-yellow-500 dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-bold">Edit</Link>
-              </td>
-            </tr>
-
-          </tbody>
-        )
-      })}
-    </>
-  )
-}
+const TableRowData = ({ users, onDelete }) => (
+  <tbody>
+    {users.map((user) => (
+      <TableRow key={user.id} user={user} onDelete={onDelete} />
+    ))}
+  </tbody>
+);
 
 export default TableRowData;

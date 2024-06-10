@@ -1,15 +1,18 @@
 import '../index.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EndpointsService from "../services/endpoints.service";
-import AsyncSelect from 'react-select/async';
 import { Switch } from 'antd';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import AsyncSelect from 'react-select/async';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function EditRecord() {
+
+function AddSomeone() {
   let history = useHistory();
-  const successNotify = () => toast.success('Record UPDATED!', {
+
+  // Toast Notification (Success)
+  const successNotify = () => toast.success('Record ADDED!', {
     position: "top-center",
     autoClose: 4000,
     hideProgressBar: false,
@@ -18,6 +21,8 @@ function EditRecord() {
     draggable: true,
     progress: undefined,
   });
+
+  // Toast Notification (Failed)
   const failNotify = () => toast.error('Something went wrong', {
     position: "top-center",
     autoClose: 4000,
@@ -28,28 +33,16 @@ function EditRecord() {
     progress: undefined,
   });
 
-  const { id } = useParams();
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [status, setStatus] = useState(false);
 
 
-  // handle category
-  const handleCategory = value => {
-    console.log(value)
-    setUsers({
-      ...users,
-      category: value.value
-    });
-
+  // handle selection
+  const handleChange = value => {
+    setCategory(value);
   };
-
-  // handle status
-  const handleStatus = value => {
-    console.log(value)
-    setUsers({
-      ...users,
-      status: value
-    });
-  };
-
 
   const fetchCategories = () => {
     return fetch('http://localhost:8001/categories').then(res => {
@@ -57,43 +50,16 @@ function EditRecord() {
     })
   }
 
-  const [loading, setLoading] = useState(false);
-
-  const [users, setUsers] = useState({
-    id: '',
-    name: '',
-    description: '',
-    category: '',
-    status: ''
-  });
-
-  useEffect(() => {
-    try {
-      setLoading(true);
-      async function getUser() {
-        let res = await EndpointsService.getUser(id);
-        setLoading(false);
-        setUsers(res.data);
-      }
-
-      getUser();
-    } catch (e) {
-      window.alert("Can't retrieve details")
-    }
-  }, [id])
-
-  // EDIT Function
-  const editRecord = async (event) => {
+  const add = async (event) => {
     let data = {
-      name: users.name,
-      description: users.description,
-      category: users.category,
-      status: users.status
+      name: name,
+      description: description,
+      category: category,
+      status: status
     };
-
     event.preventDefault();
     try {
-      let res = await EndpointsService.update(id, data);
+      let res = await EndpointsService.create(data);
       if (res) {
         successNotify();
         history.push('/');
@@ -104,16 +70,14 @@ function EditRecord() {
     }
   }
 
-
   return (
-
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Edit</span> Record</h2>
-        </div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>Add</span> Someone</h2>
 
-        <div className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10" >
+        </div>
+        <form className="form-group mt-8 space-y-6 drop-shadow-xl  sm:rounded-md bg-white py-10 px-10" onSubmit={add}>
           {/* Name */}
           <div>
             <label htmlFor="name" className="font-sans block text-md font-medium text-gray-700">
@@ -123,11 +87,8 @@ function EditRecord() {
               type="text"
               name="name"
               id="name"
-              defaultValue={users.name}
-              onChange={(e) => setUsers({
-                ...users,
-                name: e.target.value
-              })}
+              required
+              onChange={(e) => setName(e.target.value)}
               className="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
@@ -141,13 +102,10 @@ function EditRecord() {
               <textarea
                 id="description"
                 name="description"
+                required
                 rows={3}
-                defaultValue={users.description}
-                onChange={(e) => setUsers({
-                  ...users,
-                  description: e.target.value
-                })}
                 className="form-control shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                onChange={(e) => setDescription(e.target.value)}
 
               />
             </div>
@@ -161,43 +119,48 @@ function EditRecord() {
             <AsyncSelect
               cacheOptions
               defaultOptions
-              value={users.category}
+              value={category}
               getOptionLabel={e => e.category_name}
               getOptionValue={e => e.id}
               loadOptions={fetchCategories}
-              onChange={handleCategory}
+              onChange={handleChange}
             />
           </div>
 
           {/* Toggle - Active/Inactive */}
           <div>
-            <Switch checkedChildren="Active" unCheckedChildren="Inactive" checked={users.status} onChange={handleStatus} />
-            <br />
+            {/* <label htmlFor="Inactive/Active" className="block text-sm font-medium text-gray-700">
+          {status ? <span>Active</span> : <span>Inactive</span>}
+          </label>
+          <Switch 
+          onChange={() => setStatus(!status)}
+          /> */}
+            <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={() => setStatus(!status)} />
           </div>
 
-          {/* Edit BUTTON */}
+          {/* ADD BUTTON */}
           <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-bold"
-              onClick={editRecord}
+
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
               </span>
-              Edit
+              {' '}
+              Add
             </button>
-
           </div>
           <div className='flex justify-center'>
             <a href='/home'>Back to Home</a>
           </div>
-
-        </div>
-
+        </form>
 
       </div>
     </div>
+
   )
+
 }
 
-export default EditRecord;
+export default AddSomeone;

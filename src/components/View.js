@@ -2,22 +2,12 @@ import '../index.css';
 import React, { useState, useEffect } from 'react';
 import EndpointsService from "../services/endpoints.service";
 import { Switch } from 'antd';
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loader from './Loader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ViewRecord() {
-  let history = useHistory();
-  const successNotify = () => toast.success('Record DELETED!', {
-    position: "top-center",
-    autoClose: 4000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+function View() {
   const failNotify = () => toast.error('Something went wrong', {
     position: "top-center",
     autoClose: 4000,
@@ -28,8 +18,8 @@ function ViewRecord() {
     progress: undefined,
   });
 
-
   const { id } = useParams();
+
   const [state, setState] = useState({
     loading: false,
     users: {},
@@ -52,33 +42,16 @@ function ViewRecord() {
     }
   }, [id])
 
-  // delete Record
-  const deleteRecord = async (event) => {
-    window.confirm("Do you want to delete this record?");
-    let userId = {
-      id: id
-    };
-    event.preventDefault();
-    try {
-      let res = await EndpointsService.delete(userId.id);
-      if (res) {
-        successNotify();
-        history.push('/');
-      }
-    } catch (e) {
-      failNotify();
-      console.log(e);
-    }
-  }
 
   let { loading, users } = state;
+
   return (
 
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>View</span> Record</h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-grey"><span className='text-indigo-500'>View</span></h2>
         </div>
         {
           loading ? <Loader /> : <div>
@@ -137,19 +110,6 @@ function ViewRecord() {
                   <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={users.status} disabled />
                 </div>
 
-                {/* Delete BUTTON */}
-                <div>
-                  <button
-                    type="submit"
-                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-md rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 font-bold"
-                    onClick={deleteRecord}
-                  >
-                    <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                    </span>
-                    {''}
-                    Delete
-                  </button>
-                </div>
                 <div className='flex justify-center'>
                   <a href='/home'>Back to Home</a>
                 </div>
@@ -163,4 +123,4 @@ function ViewRecord() {
   )
 }
 
-export default ViewRecord;
+export default View;
